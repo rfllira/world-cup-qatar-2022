@@ -1,8 +1,13 @@
-export default function App() {
+import Header from "./components/header"
+import Body from "./components/body"
+import Footer from "./components/footer"
 
+export default function App() {
   return (
     <div>
-      <h1>ola</h1>
+      <Header />
+      <Body />
+      <Footer />
     </div>
   )
 }
