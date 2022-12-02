@@ -1,0 +1,19 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.Header {
+  background-color: red;
+}
+
+.Body {
+  display: flex;
+  justify-content: center;
+
+}
+
+.Footer {
+  background-color: red;
+}
