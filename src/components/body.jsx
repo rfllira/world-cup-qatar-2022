@@ -12,9 +12,9 @@ Requisitos:
 4. Cada jogo deve ter:
 
    - Nome do time 1 e time 2
-   - Abreviação do time 1 e time 2 //não tem a abreviação
-   - Data e hora de início da partida //não tem
-   - Estádio da partida //não tem
+   - Abreviação do time 1 e time 2
+   - Data e hora de início da partida
+   - Estádio da partida
 
 5. O palpite deve ser somente da quantidade de gols de cada time:
 
@@ -31,6 +31,7 @@ Entrega:
 // api: https://raw.githubusercontent.com/openfootball/worldcup.json/master/2022/worldcup.json
 
 import React, { useState } from "react"
+import { Button } from 'primereact/button';
 
 export default function Body() {
   const [date] = useState(new Date())
@@ -196,7 +197,7 @@ export default function Body() {
   const transformDay = () => {
     const lengthDay = date.getDate().toFixed().length
 
-    if (lengthDay == 1) return `0${date.getDate() + 1}`
+    if (lengthDay == 1) return `0${date.getDate()}`
 
     return date.getDate()
   }
@@ -208,40 +209,46 @@ export default function Body() {
     return filtered
   }
 
+  // localStorage.setItem("homeTeamGoals", "0")
+  // localStorage.setItem("awayTeamGoals", "0")
+
   const getMatchsToday = () => (
     filtredForDay().map((value, index) => (
       <div
         key={index}
         className="block-of-clubs">
         <div className="clubs">
+          <div className="match-and-button">
+            <span className="match">
+              <p>{value.homeTeam.name} ({value.homeTeam.country}) {value.homeTeam.goals}</p>
+              <p>X</p>
+              <p> {value.awayTeam.goals} {value.awayTeam.name} ({value.awayTeam.country})</p>
+            </span>
+            <span className="palpite-area">
+              <Button
+                className="p-button-outlined"
+                label="Dar Palpite"
+                onClick={() => localStorage.setItem("homeTeamGoals", "2")}
+              />
+              <span
+              className="palpite">
+                Seu palpite foi: {value.homeTeam.country} {localStorage.getItem("homeTeamGoals") || 0} X {localStorage.getItem("awayTeamGoals") || 0} {value.awayTeam.country}</span>
+            </span>
+          </div>
           <p>
-            <span>{value.homeTeam.name}</span> <br />
-            <span>{value.homeTeam.country}</span>
+            <span>{value.date.slice(0, 10)}</span> <br /> <br />
+            <span>{`${Number(value.date.slice(11,13)) - 3}:${value.date.slice(14,16)}`}</span> <br /> <br />
+            <span>{value.venue}</span>
           </p>
-          <span>X</span>
-          <p>
-            <span>{value.awayTeam.name}</span> <br />
-            <span>{value.awayTeam.country}</span>
-          </p>
-          <p>
-          <span>{value.date.slice(0, 10)}</span> <br /> <br />
-          <span>{value.date.slice(11, 16)}</span> <br /> <br />
-          <span>{value.venue}</span>
-        </p>
         </div>
       </div>
     ))
   )
 
   return (
-    <div className="Body">
-      <h1>Hoje</h1>
-      <div>
-        {
-          getMatchsToday()
-        }
-
-      </div>
+    <div className="body">
+      <h1>Eventos diários da Copa do mundo no Qatar 2022</h1>
+      <div>{getMatchsToday()}</div>
     </div>
   )
 }

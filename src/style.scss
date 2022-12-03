@@ -1,3 +1,9 @@
+html {
+  background: url("../public/background.svg") center center no-repeat;
+  background-size: cover;
+  background-color: #121214;
+}
+
 .App {
   display: flex;
   flex-direction: column;
@@ -5,26 +11,46 @@
 }
 
 .Header {
-  background-color: rgb(32, 128, 31);
-  color: rgb(255, 255, 0);
+  background-color: rgb(128, 31, 31);
+  color: rgb(255, 255, 255);
+  padding-left: 20px;
 }
 
-.Body {
+.body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: white;
+
+  h1 {
+    width: 400px;
+    text-align: center;
+  }
 
   .block-of-clubs {
+    display: flex;
     background-color: rgb(216, 216, 216);
+    justify-content: center;
     border-radius: 10px;
     padding: 10px;
     margin: 5px;
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
 
-    .clubs {
+    .match {
       display: flex;
       flex-direction: row;
-      gap: 20px;
+      gap: 10px;
+    }
+
+    .palpite-area {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: rgb(113, 113, 113);
+      font-size: 15px;
     }
   }
 }
