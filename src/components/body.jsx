@@ -235,8 +235,8 @@ export default function Body() {
           </div>
           <p>
             <span>{value.date.slice(0, 10)}</span> <br /> <br />
-            <span>{`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</span> <br /> <br />
-            <span>{value.venue}</span>
+            <span>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</span> <br /> <br />
+            <span>Local: {value.venue}</span>
           </p>
         </div>
       </div>
