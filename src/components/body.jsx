@@ -209,13 +209,10 @@ export default function Body() {
     return filtered
   }
 
-  // localStorage.setItem("homeTeamGoals", "0")
-  // localStorage.setItem("awayTeamGoals", "0")
-
   const getMatchsToday = () => (
-    filtredForDay().map((value, index) => (
+    filtredForDay().map((value) => (
       <div
-        key={index}
+        key={value.id}
         className="block-of-clubs">
         <div className="clubs">
           <div className="match-and-button">
@@ -231,13 +228,14 @@ export default function Body() {
                 onClick={() => localStorage.setItem("homeTeamGoals", "2")}
               />
               <span
-              className="palpite">
-                Seu palpite foi: {value.homeTeam.country} {localStorage.getItem("homeTeamGoals") || 0} X {localStorage.getItem("awayTeamGoals") || 0} {value.awayTeam.country}</span>
+                className="palpite">
+                Seu palpite foi: {value.homeTeam.country} {localStorage.getItem("homeTeamGoals") || 0} X {localStorage.getItem("awayTeamGoals") || 0} {value.awayTeam.country}
+              </span>
             </span>
           </div>
           <p>
             <span>{value.date.slice(0, 10)}</span> <br /> <br />
-            <span>{`${Number(value.date.slice(11,13)) - 3}:${value.date.slice(14,16)}`}</span> <br /> <br />
+            <span>{`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</span> <br /> <br />
             <span>{value.venue}</span>
           </p>
         </div>

@@ -26,6 +26,10 @@ html {
   h1 {
     width: 400px;
     text-align: center;
+
+    @media(max-Width: 400px) {
+      width: 300px;
+    }
   }
 
   .block-of-clubs {
@@ -38,6 +42,10 @@ html {
     color: black;
     font-size: 20px;
     font-weight: 500;
+
+    @media(max-Width: 400px) {
+      font-size: 15px;
+    }
 
     .match {
       display: flex;
