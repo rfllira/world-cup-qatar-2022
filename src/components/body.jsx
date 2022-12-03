@@ -3,24 +3,24 @@
 
 Requisitos:
 
-1. A lista dos jogos de hoje podem ser mockados, mas fique à vontade para criar ou consumir uma API de sua preferência.
+1. A lista dos jogos de hoje podem ser mockados, mas fique à vontade para criar ou consumir uma API de sua preferência. [CONCLUIDO]
 
-2. Você precisa salvar o palpite pra não perdê-lo ao recarregar a página. Recomendamos: Local Storage.
+2. Você precisa salvar o palpite pra não perdê-lo ao recarregar a página. Recomendamos: Local Storage. [EM ANDAMENTO]
 
-3. Um palpite poderá ser alterado até 30min antes do início do jogo.
+3. Um palpite poderá ser alterado até 30min antes do início do jogo. [NÃO INICIADO]
 
-4. Cada jogo deve ter:
+4. Cada jogo deve ter: [CONCLUIDO]
 
    - Nome do time 1 e time 2
    - Abreviação do time 1 e time 2
    - Data e hora de início da partida
    - Estádio da partida
 
-5. O palpite deve ser somente da quantidade de gols de cada time:
+5. O palpite deve ser somente da quantidade de gols de cada time: [CONCLUIDO]
 
    Ex: BRA 2 x 3 CAM
 
-6. A sua aplicação deve ser fácil de usar, clara e funcione corretamente.
+6. A sua aplicação deve ser fácil de usar, clara e funcione corretamente. [CONCLUIDO]
 
 Entrega:
 
@@ -45,15 +45,14 @@ export default function Body() {
   const transformDay = () => {
     const lengthDay = date.getDate().toFixed().length
 
-    if (lengthDay == 1) return `0${date.getDate()}`
+    if (lengthDay == 1) return `${date.getFullYear()}-${date.getMonth() + 1}-0${date.getDate()}`
 
-    return date.getDate()
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
   }
 
-  console.log(clubsApi);
-
   const filtredForDay = () => {
-    const fullDate = `${date.getFullYear()}-${date.getMonth() + 1}-${transformDay()}`
+    const fullDate = transformDay()
+    // @ts-ignore
     const filtered = clubsApi.filter((value) => value.date.includes(fullDate))
 
     return filtered
@@ -84,7 +83,7 @@ export default function Body() {
             </span>
           </div>
           <p>
-            <span>{value.date.slice(0, 10)}</span> <br /> <br />
+            <span>{value.date.slice(0, 10).replaceAll("-","/")}</span> <br /> <br />
             <span>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</span> <br /> <br />
             <span>Local: {value.venue}</span>
           </p>
