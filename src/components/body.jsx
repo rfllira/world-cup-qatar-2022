@@ -28,171 +28,19 @@ Entrega:
 
 - Ao concluir o teste, responda a esse email, com o link do repositório. E se conseguiu executar ou não como queria...*/
 
-// api: https://raw.githubusercontent.com/openfootball/worldcup.json/master/2022/worldcup.json
+// api: https://copa22.medeiro.tech/matches/today
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Button } from 'primereact/button';
+import api from "../service/api"
 
 export default function Body() {
   const [date] = useState(new Date())
-  const [clubsApi] = useState(
-    [
-      {
-        "id": "clakj8jil0053ra2t13wmp567",
-        "venue": "Khalifa International Stadium",
-        "location": "Ar-Rayyan",
-        "status": "scheduled",
-        "stageName": "Round of 16",
-        "time": "0'",
-        "timeExtraInfo": {
-          "current": "0'",
-          "firstHalfTime": null,
-          "firstHalfExtraTime": null,
-          "secondHalfTime": null,
-          "secondHalfExtraTime": null
-        },
-        "homeTeam": {
-          "country": "NED",
-          "goals": 0,
-          "name": "Netherlands",
-          "penalties": 0
-        },
-        "awayTeam": {
-          "country": "USA",
-          "goals": 0,
-          "name": "USA",
-          "penalties": 0
-        },
-        "officials": [
-          {
-            "name": "Wilton SAMPAIO",
-            "role": "Referee",
-            "country": "BRA"
-          },
-          {
-            "name": "Bruno Boschilia",
-            "role": "Assistant Referee 1",
-            "country": "BRA"
-          },
-          {
-            "name": "Bruno PIRES",
-            "role": "Assistant Referee 2",
-            "country": "BRA"
-          },
-          {
-            "name": "Andres Matias MATONTE CABRERA",
-            "role": "Fourth official",
-            "country": "URU"
-          },
-          {
-            "name": "Nicolás Gallo Barragán",
-            "role": "Video Assistant Referee (VAR)",
-            "country": "COL"
-          },
-          {
-            "name": "Ashley Beecham",
-            "role": "Offside VAR",
-            "country": "AUS"
-          },
-          {
-            "name": "Juan SOTO",
-            "role": "Assistant VAR",
-            "country": "VEN"
-          },
-          {
-            "name": "Mauro Vigliano",
-            "role": "Support VAR",
-            "country": "ARG"
-          },
-          {
-            "name": "Nicolás Taran",
-            "role": "Reserve Assistant Referee",
-            "country": "URU"
-          }
-        ],
-        "createdAt": "2022-11-17T03:48:24.141Z",
-        "date": "2022-12-03T15:00:00.000Z",
-        "updatedAt": "2022-12-02T23:00:01.254Z"
-      },
-      {
-        "id": "clakj8jil0057ra2tbheqxb6f",
-        "venue": "Ahmad Bin Ali Stadium",
-        "location": "Ar-Rayyan",
-        "status": "scheduled",
-        "stageName": "Round of 16",
-        "time": "0'",
-        "timeExtraInfo": {
-          "current": "0'",
-          "firstHalfTime": null,
-          "firstHalfExtraTime": null,
-          "secondHalfTime": null,
-          "secondHalfExtraTime": null
-        },
-        "homeTeam": {
-          "country": "ARG",
-          "goals": 0,
-          "name": "Argentina",
-          "penalties": 0
-        },
-        "awayTeam": {
-          "country": "AUS",
-          "goals": 0,
-          "name": "Australia",
-          "penalties": 0
-        },
-        "officials": [
-          {
-            "name": "Szymon MARCINIAK",
-            "role": "Referee",
-            "country": "POL"
-          },
-          {
-            "name": "Pawel SOKOLNICKI",
-            "role": "Assistant Referee 1",
-            "country": "POL"
-          },
-          {
-            "name": "Tomasz LISTKIEWICZ",
-            "role": "Assistant Referee 2",
-            "country": "POL"
-          },
-          {
-            "name": "Mario Alberto Escobar Toca",
-            "role": "Fourth official",
-            "country": "GUA"
-          },
-          {
-            "name": "Tomasz KWIATKOWSKI",
-            "role": "Video Assistant Referee (VAR)",
-            "country": "POL"
-          },
-          {
-            "name": "Alessandro Giallatini",
-            "role": "Offside VAR",
-            "country": "ITA"
-          },
-          {
-            "name": "Marco Fritz",
-            "role": "Assistant VAR",
-            "country": "GER"
-          },
-          {
-            "name": "Benoit MILLOT",
-            "role": "Support VAR",
-            "country": "FRA"
-          },
-          {
-            "name": "Katie Nesbitt",
-            "role": "Reserve Assistant Referee",
-            "country": "USA"
-          }
-        ],
-        "createdAt": "2022-11-17T03:48:24.141Z",
-        "date": "2022-12-03T19:00:00.000Z",
-        "updatedAt": "2022-12-02T23:00:01.728Z"
-      }
-    ]
-  )
+  const [clubsApi, setClubsApi] = useState([])
+
+  const requestApi = () => api.get("/matches/today").then((value) => setClubsApi(value.data))
+
+  useEffect(() => { requestApi() }, [])
 
   const transformDay = () => {
     const lengthDay = date.getDate().toFixed().length
@@ -201,6 +49,8 @@ export default function Body() {
 
     return date.getDate()
   }
+
+  console.log(clubsApi);
 
   const filtredForDay = () => {
     const fullDate = `${date.getFullYear()}-${date.getMonth() + 1}-${transformDay()}`
