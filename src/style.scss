@@ -15,5 +15,17 @@
   justify-content: center;
   align-items: center;
 
+  .block-of-clubs {
+    background-color: rgb(216, 216, 216);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+
+    .clubs {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
 }
 

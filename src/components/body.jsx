@@ -12,9 +12,9 @@ Requisitos:
 4. Cada jogo deve ter:
 
    - Nome do time 1 e time 2
-   - Abreviação do time 1 e time 2
-   - Data e hora de início da partida
-   - Estádio da partida
+   - Abreviação do time 1 e time 2 //não tem a abreviação
+   - Data e hora de início da partida //não tem
+   - Estádio da partida //não tem
 
 5. O palpite deve ser somente da quantidade de gols de cada time:
 
@@ -37,86 +37,198 @@ export default function Body() {
   const [clubsApi] = useState(
     [
       {
-        "round": "Matchday 13",
-        "group": "Group G",
-        "date": "2022-12-02",
-        "team1": "Serbia",
-        "team2": "Switzerland"
+        "id": "clakj8jil0053ra2t13wmp567",
+        "venue": "Khalifa International Stadium",
+        "location": "Ar-Rayyan",
+        "status": "scheduled",
+        "stageName": "Round of 16",
+        "time": "0'",
+        "timeExtraInfo": {
+          "current": "0'",
+          "firstHalfTime": null,
+          "firstHalfExtraTime": null,
+          "secondHalfTime": null,
+          "secondHalfExtraTime": null
+        },
+        "homeTeam": {
+          "country": "NED",
+          "goals": 0,
+          "name": "Netherlands",
+          "penalties": 0
+        },
+        "awayTeam": {
+          "country": "USA",
+          "goals": 0,
+          "name": "USA",
+          "penalties": 0
+        },
+        "officials": [
+          {
+            "name": "Wilton SAMPAIO",
+            "role": "Referee",
+            "country": "BRA"
+          },
+          {
+            "name": "Bruno Boschilia",
+            "role": "Assistant Referee 1",
+            "country": "BRA"
+          },
+          {
+            "name": "Bruno PIRES",
+            "role": "Assistant Referee 2",
+            "country": "BRA"
+          },
+          {
+            "name": "Andres Matias MATONTE CABRERA",
+            "role": "Fourth official",
+            "country": "URU"
+          },
+          {
+            "name": "Nicolás Gallo Barragán",
+            "role": "Video Assistant Referee (VAR)",
+            "country": "COL"
+          },
+          {
+            "name": "Ashley Beecham",
+            "role": "Offside VAR",
+            "country": "AUS"
+          },
+          {
+            "name": "Juan SOTO",
+            "role": "Assistant VAR",
+            "country": "VEN"
+          },
+          {
+            "name": "Mauro Vigliano",
+            "role": "Support VAR",
+            "country": "ARG"
+          },
+          {
+            "name": "Nicolás Taran",
+            "role": "Reserve Assistant Referee",
+            "country": "URU"
+          }
+        ],
+        "createdAt": "2022-11-17T03:48:24.141Z",
+        "date": "2022-12-03T15:00:00.000Z",
+        "updatedAt": "2022-12-02T23:00:01.254Z"
       },
       {
-        "round": "Matchday 13",
-        "group": "Group G",
-        "date": "2022-12-02",
-        "team1": "Cameroon",
-        "team2": "Brazil"
-      },
-      {
-        "round": "Matchday 13",
-        "group": "Group H",
-        "date": "2022-12-02",
-        "team1": "Ghana",
-        "team2": "Uruguay"
-      },
-      {
-        "round": "Matchday 13",
-        "group": "Group H",
-        "date": "2022-12-02",
-        "team1": "South Korea",
-        "team2": "Portugal"
-      },
-      {
-        "round": "Matchday 13",
-        "group": "Group G",
-        "date": "2022-12-10",
-        "team1": "Serbia",
-        "team2": "Switzerland"
-      },
-      {
-        "round": "Matchday 13",
-        "group": "Group G",
-        "date": "2022-12-10",
-        "team1": "Cameroon",
-        "team2": "Brazil"
-      },
-      {
-        "round": "Matchday 13",
-        "group": "Group H",
-        "date": "2022-12-10",
-        "team1": "Ghana",
-        "team2": "Uruguay"
-      },
-      {
-        "round": "Matchday 13",
-        "group": "Group H",
-        "date": "2022-12-10",
-        "team1": "South Korea",
-        "team2": "Portugal"
-      },
+        "id": "clakj8jil0057ra2tbheqxb6f",
+        "venue": "Ahmad Bin Ali Stadium",
+        "location": "Ar-Rayyan",
+        "status": "scheduled",
+        "stageName": "Round of 16",
+        "time": "0'",
+        "timeExtraInfo": {
+          "current": "0'",
+          "firstHalfTime": null,
+          "firstHalfExtraTime": null,
+          "secondHalfTime": null,
+          "secondHalfExtraTime": null
+        },
+        "homeTeam": {
+          "country": "ARG",
+          "goals": 0,
+          "name": "Argentina",
+          "penalties": 0
+        },
+        "awayTeam": {
+          "country": "AUS",
+          "goals": 0,
+          "name": "Australia",
+          "penalties": 0
+        },
+        "officials": [
+          {
+            "name": "Szymon MARCINIAK",
+            "role": "Referee",
+            "country": "POL"
+          },
+          {
+            "name": "Pawel SOKOLNICKI",
+            "role": "Assistant Referee 1",
+            "country": "POL"
+          },
+          {
+            "name": "Tomasz LISTKIEWICZ",
+            "role": "Assistant Referee 2",
+            "country": "POL"
+          },
+          {
+            "name": "Mario Alberto Escobar Toca",
+            "role": "Fourth official",
+            "country": "GUA"
+          },
+          {
+            "name": "Tomasz KWIATKOWSKI",
+            "role": "Video Assistant Referee (VAR)",
+            "country": "POL"
+          },
+          {
+            "name": "Alessandro Giallatini",
+            "role": "Offside VAR",
+            "country": "ITA"
+          },
+          {
+            "name": "Marco Fritz",
+            "role": "Assistant VAR",
+            "country": "GER"
+          },
+          {
+            "name": "Benoit MILLOT",
+            "role": "Support VAR",
+            "country": "FRA"
+          },
+          {
+            "name": "Katie Nesbitt",
+            "role": "Reserve Assistant Referee",
+            "country": "USA"
+          }
+        ],
+        "createdAt": "2022-11-17T03:48:24.141Z",
+        "date": "2022-12-03T19:00:00.000Z",
+        "updatedAt": "2022-12-02T23:00:01.728Z"
+      }
     ]
   )
 
   const transformDay = () => {
     const lengthDay = date.getDate().toFixed().length
 
-    if (lengthDay == 1) return `0${date.getDate()}`
+    if (lengthDay == 1) return `0${date.getDate() + 1}`
 
     return date.getDate()
   }
 
   const filtredForDay = () => {
-    const fullDate = `${date.getFullYear()}-${date.getMonth()+1}-${transformDay()}`
-    const filtered = clubsApi.filter((value) => value.date == fullDate)
+    const fullDate = `${date.getFullYear()}-${date.getMonth() + 1}-${transformDay()}`
+    const filtered = clubsApi.filter((value) => value.date.includes(fullDate))
 
     return filtered
   }
 
   const getMatchsToday = () => (
     filtredForDay().map((value, index) => (
-      <div>
-        <p key={index}>
-          <span>{value.team1} x {value.team2} <br /></span>
-          <span>{value.date}<br /></span>
+      <div
+        key={index}
+        className="block-of-clubs">
+        <div className="clubs">
+          <p>
+            <span>{value.homeTeam.name}</span> <br />
+            <span>{value.homeTeam.country}</span>
+          </p>
+          <span>X</span>
+          <p>
+            <span>{value.awayTeam.name}</span> <br />
+            <span>{value.awayTeam.country}</span>
+          </p>
+          <p>
+          <span>{value.date.slice(0, 10)}</span> <br /> <br />
+          <span>{value.date.slice(11, 16)}</span> <br /> <br />
+          <span>{value.venue}</span>
         </p>
+        </div>
       </div>
     ))
   )
