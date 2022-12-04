@@ -54,7 +54,7 @@ export default function Body() {
   useEffect(() => { requestApi() }, [])
 
   clubsApi.map((value, index) => {
-    for (let i = 0; i <= clubsApi.length; i++ ) {
+    for (let i = 0; i <= clubsApi.length; i++) {
       value[`palpite${index}`] = `Seu palpite foi: ${value.homeTeam.country} ${localStorage.getItem(`homeTeamGoals${index}`) || 0} X ${localStorage.getItem(`awayTeamGoals${index}`) || 0} ${value.awayTeam.country}`
     }
   })
@@ -98,17 +98,18 @@ export default function Body() {
                         icon="pi pi-check"
                         className="p-button-success"
                         onClick={() => {
-                          localStorage.setItem("showPalpite1", "true")
+                          localStorage.setItem("showPalpite", "true")
                           setShowDialog(false)
                         }}
                       />
                     )}
                   >
-                    <div>
+                    <div className="dialog">
                       <p>
                         {homeTeam}
                         <InputNumber
                           inputId="minmax-buttons"
+                          // value={localStorage.getItem(`homeTeamGoals${index}`)}
                           onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
                           mode="decimal"
                           showButtons min={0}
@@ -125,20 +126,32 @@ export default function Body() {
                           max={100}
                         />
                       </p>
-                      <p>
-                        <InputText
-                          value={`${palpite}`}
-                          disabled="true"
-                        />
-                      </p>
+                      {/* {
+                        (localStorage.getItem("showPalpite")) ?
+                        (
+                        <p>
+                          <InputText
+                            value={`${palpite}`}
+                            disabled="true"
+                            style={{ width: "300px", textAlign: "center" }}
+                          />
+                        </p>
+                        ) : (
+                          <p></p>
+                        )
+                      } */}
+                      
                     </div>
 
                   </Dialog>
-                  {/* {localStorage.getItem("showPalpite1") && <span
+                  {
+                  localStorage.getItem("showPalpite") &&
+                  <span
                     className="palpite">
-                    Seu palpite foi: {value.homeTeam.country} {localStorage.getItem("homeTeamGoals") || 0} X {localStorage.getItem("awayTeamGoals") || 0} {value.awayTeam.country}
-                  </span>} */}
-
+                    {value[`palpite${index}`]}
+                  </span>
+                  }
+  
                 </span>
               </div>
 
