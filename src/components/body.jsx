@@ -87,7 +87,7 @@ export default function Body() {
                       // console.log((Number(value.date.slice(11, 13)) - 7));
                       // console.log((Number(value.date.slice(11, 13)) - 3));
                       // console.log(((Number(value.date.slice(11, 13)) - 3) * 60));
-                      // console.log((((Number(value.date.slice(11, 13)) - 3) * 60) + date.getMinutes()));
+                      // console.log((((Number(value.date.slice(11, 13)) - 3) * 60) + (date.getMinutes() - 30)));
                     }}
                   />
                   <Dialog
