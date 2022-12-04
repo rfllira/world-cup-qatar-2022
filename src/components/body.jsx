@@ -1,4 +1,3 @@
-//@ts-check
 /* Criar uma aplicação usando React JS que lista os jogos de hoje da copa, e permita seu papite neles.
 
 Requisitos:
@@ -30,72 +29,128 @@ Entrega:
 
 // api: https://copa22.medeiro.tech/matches/today
 
+
+
 import React, { useState, useEffect } from "react"
+import { InputNumber } from 'primereact/inputnumber';
+import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import api from "../service/api"
 
 export default function Body() {
   const [date] = useState(new Date())
   const [clubsApi, setClubsApi] = useState([])
+  const [showDialog, setShowDialog] = useState(false)
+  const [homeTeam, setHomeTeam] = useState("")
+  const [awayTeam, setAwayTeam] = useState("")
+  const [showPalpite1, setShowPalpite1] = useState(false)
+  const [showPalpite2, setShowPalpite2] = useState(false)
+  const [palpite, setPalpite] = useState("")
+  const [getIndex, setGetIndex] = useState("")
 
   const requestApi = () => api.get("/matches/today").then((value) => setClubsApi(value.data))
 
   useEffect(() => { requestApi() }, [])
 
-  const transformDay = () => {
-    const lengthDay = date.getDate().toFixed().length
+  clubsApi.map((value, index) => {
+    for (let i = 0; i <= clubsApi.length; i++ ) {
+      value[`palpite${index}`] = `Seu palpite foi: ${value.homeTeam.country} ${localStorage.getItem(`homeTeamGoals${index}`) || 0} X ${localStorage.getItem(`awayTeamGoals${index}`) || 0} ${value.awayTeam.country}`
+    }
+  })
 
-    if (lengthDay == 1) return `${date.getFullYear()}-${date.getMonth() + 1}-0${date.getDate()}`
-
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  }
-
-  const filtredForDay = () => {
-    const fullDate = transformDay()
-    // @ts-ignore
-    const filtered = clubsApi.filter((value) => value.date.includes(fullDate))
-
-    return filtered
-  }
-
-  const getMatchsToday = () => (
-    filtredForDay().map((value) => (
-      <div
-        key={value.id}
-        className="block-of-clubs">
-        <div className="clubs">
-          <div className="match-and-button">
-            <span className="match">
-              <p>{value.homeTeam.name} ({value.homeTeam.country}) {value.homeTeam.goals}</p>
-              <p>X</p>
-              <p> {value.awayTeam.goals} {value.awayTeam.name} ({value.awayTeam.country})</p>
-            </span>
-            <span className="palpite-area">
-              <Button
-                className="p-button-outlined"
-                label="Dar Palpite"
-                onClick={() => localStorage.setItem("homeTeamGoals", "2")}
-              />
-              <span
-                className="palpite">
-                Seu palpite foi: {value.homeTeam.country} {localStorage.getItem("homeTeamGoals") || 0} X {localStorage.getItem("awayTeamGoals") || 0} {value.awayTeam.country}
-              </span>
-            </span>
-          </div>
-          <p>
-            <span>{value.date.slice(0, 10).replaceAll("-","/")}</span> <br /> <br />
-            <span>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</span> <br /> <br />
-            <span>Local: {value.venue}</span>
-          </p>
-        </div>
-      </div>
-    ))
-  )
+  console.log(clubsApi);
 
   return (
     <div className="body">
       <h1>Eventos diários da Copa do mundo no Qatar 2022</h1>
-      <div>{getMatchsToday()}</div>
+      {
+        clubsApi.map((value, index) => (
+          <div key={value.id} className="block-of-clubs">
+            <div>
+              <div>
+                <span className="match">
+                  <p>{value.homeTeam.name} ({value.homeTeam.country}) {value.homeTeam.goals}</p>
+                  <p>X</p>
+                  <p> {value.awayTeam.goals} {value.awayTeam.name} ({value.awayTeam.country})</p>
+                </span>
+
+                <span className="palpite-area">
+                  <Button
+                    className="p-button-outlined"
+                    label="Dar Palpite"
+                    onClick={() => {
+                      setShowDialog(true)
+                      setAwayTeam(value.awayTeam.country)
+                      setHomeTeam(value.homeTeam.country)
+                      setPalpite(value[`palpite${index}`])
+                      setGetIndex(index)
+                    }}
+                  />
+                  <Dialog
+                    visible={showDialog}
+                    style={{ width: "400px" }}
+                    onHide={() => setShowDialog(false)}
+                    header={`Dar palpite na partida ${homeTeam} X ${awayTeam}`}
+                    footer={() => (
+                      <Button
+                        label="Salvar"
+                        icon="pi pi-check"
+                        className="p-button-success"
+                        onClick={() => {
+                          localStorage.setItem("showPalpite1", "true")
+                          setShowDialog(false)
+                        }}
+                      />
+                    )}
+                  >
+                    <div>
+                      <p>
+                        {homeTeam}
+                        <InputNumber
+                          inputId="minmax-buttons"
+                          onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
+                          mode="decimal"
+                          showButtons min={0}
+                          max={100}
+                        />
+                      </p>
+                      <p>
+                        {awayTeam}
+                        <InputNumber
+                          inputId="minmax-buttons"
+                          onValueChange={(e) => localStorage.setItem(`awayTeamGoals${getIndex}`, `${e.value}`)}
+                          mode="decimal"
+                          showButtons min={0}
+                          max={100}
+                        />
+                      </p>
+                      <p>
+                        <InputText
+                          value={`${palpite}`}
+                          disabled="true"
+                        />
+                      </p>
+                    </div>
+
+                  </Dialog>
+                  {/* {localStorage.getItem("showPalpite1") && <span
+                    className="palpite">
+                    Seu palpite foi: {value.homeTeam.country} {localStorage.getItem("homeTeamGoals") || 0} X {localStorage.getItem("awayTeamGoals") || 0} {value.awayTeam.country}
+                  </span>} */}
+
+                </span>
+              </div>
+
+              <p>
+                <span>{value.date.slice(0, 10).replaceAll("-", "/")}</span> <br /> <br />
+                <span>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</span> <br /> <br />
+                <span>Local: {value.venue}</span>
+              </p>
+            </div>
+          </div>
+        ))
+      }
     </div>
   )
 }

@@ -34,6 +34,7 @@ html {
 
   .block-of-clubs {
     display: flex;
+    width: 400px;
     background-color: rgb(216, 216, 216);
     justify-content: center;
     border-radius: 10px;
@@ -45,6 +46,7 @@ html {
 
     @media(max-Width: 400px) {
       font-size: 15px;
+      width: 300px;
     }
 
     .match {
