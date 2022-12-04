@@ -1,7 +1,7 @@
 export default function Header() {
   return (
     <div className="Header">
-      <h2>Copa do Mundo Qatar 2022</h2>
+      <img src="./download-logo-fifa-world-cup-qatar-2022-png-e-vector2-removebg-preview.png" alt="" />
     </div>
   )
 }

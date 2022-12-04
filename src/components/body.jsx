@@ -4,9 +4,9 @@ Requisitos:
 
 1. A lista dos jogos de hoje podem ser mockados, mas fique à vontade para criar ou consumir uma API de sua preferência. [CONCLUIDO]
 
-2. Você precisa salvar o palpite pra não perdê-lo ao recarregar a página. Recomendamos: Local Storage. [EM ANDAMENTO]
+2. Você precisa salvar o palpite pra não perdê-lo ao recarregar a página. Recomendamos: Local Storage. [CONCLUIDO]
 
-3. Um palpite poderá ser alterado até 30min antes do início do jogo. [NÃO INICIADO]
+3. Um palpite poderá ser alterado até 30min antes do início do jogo. [EM ANDAMENTO]
 
 4. Cada jogo deve ter: [CONCLUIDO]
 
@@ -33,20 +33,18 @@ Entrega:
 
 import React, { useState, useEffect } from "react"
 import { InputNumber } from 'primereact/inputnumber';
-import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import api from "../service/api"
 
 export default function Body() {
   const [date] = useState(new Date())
+  const [minutsCurrent] = useState((date.getHours() * 60) + date.getMinutes())
+  const [fullDate] = useState(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`)
   const [clubsApi, setClubsApi] = useState([])
   const [showDialog, setShowDialog] = useState(false)
   const [homeTeam, setHomeTeam] = useState("")
   const [awayTeam, setAwayTeam] = useState("")
-  const [showPalpite1, setShowPalpite1] = useState(false)
-  const [showPalpite2, setShowPalpite2] = useState(false)
-  const [palpite, setPalpite] = useState("")
   const [getIndex, setGetIndex] = useState("")
 
   const requestApi = () => api.get("/matches/today").then((value) => setClubsApi(value.data))
@@ -55,11 +53,12 @@ export default function Body() {
 
   clubsApi.map((value, index) => {
     for (let i = 0; i <= clubsApi.length; i++) {
-      value[`palpite${index}`] = `Seu palpite foi: ${value.homeTeam.country} ${localStorage.getItem(`homeTeamGoals${index}`) || 0} X ${localStorage.getItem(`awayTeamGoals${index}`) || 0} ${value.awayTeam.country}`
+      value[`palpite${index}`] = `Seu palpite: ${value.homeTeam.country} ${localStorage.getItem(`homeTeamGoals${index}`) || 0} X ${localStorage.getItem(`awayTeamGoals${index}`) || 0} ${value.awayTeam.country}`
     }
   })
 
-  console.log(clubsApi);
+  // console.log(minutsCurrent);
+  // console.log(date.getHours() *60 + );
 
   return (
     <div className="body">
@@ -79,12 +78,16 @@ export default function Body() {
                   <Button
                     className="p-button-outlined"
                     label="Dar Palpite"
+                    disabled={(minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) + date.getMinutes())) ? true : false}
                     onClick={() => {
                       setShowDialog(true)
                       setAwayTeam(value.awayTeam.country)
                       setHomeTeam(value.homeTeam.country)
-                      setPalpite(value[`palpite${index}`])
                       setGetIndex(index)
+                      // console.log((Number(value.date.slice(11, 13)) - 7));
+                      // console.log((Number(value.date.slice(11, 13)) - 3));
+                      // console.log(((Number(value.date.slice(11, 13)) - 3) * 60));
+                      // console.log((((Number(value.date.slice(11, 13)) - 3) * 60) + date.getMinutes()));
                     }}
                   />
                   <Dialog
@@ -98,7 +101,7 @@ export default function Body() {
                         icon="pi pi-check"
                         className="p-button-success"
                         onClick={() => {
-                          localStorage.setItem("showPalpite", "true")
+                          localStorage.setItem(`showPalpite${getIndex}`, "true")
                           setShowDialog(false)
                         }}
                       />
@@ -109,7 +112,7 @@ export default function Body() {
                         {homeTeam}
                         <InputNumber
                           inputId="minmax-buttons"
-                          // value={localStorage.getItem(`homeTeamGoals${index}`)}
+                          value={localStorage.getItem(`homeTeamGoals${getIndex}`)}
                           onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
                           mode="decimal"
                           showButtons min={0}
@@ -120,46 +123,28 @@ export default function Body() {
                         {awayTeam}
                         <InputNumber
                           inputId="minmax-buttons"
+                          value={localStorage.getItem(`awayTeamGoals${getIndex}`)}
                           onValueChange={(e) => localStorage.setItem(`awayTeamGoals${getIndex}`, `${e.value}`)}
                           mode="decimal"
                           showButtons min={0}
                           max={100}
                         />
                       </p>
-                      {/* {
-                        (localStorage.getItem("showPalpite")) ?
-                        (
-                        <p>
-                          <InputText
-                            value={`${palpite}`}
-                            disabled="true"
-                            style={{ width: "300px", textAlign: "center" }}
-                          />
-                        </p>
-                        ) : (
-                          <p></p>
-                        )
-                      } */}
-                      
                     </div>
 
                   </Dialog>
                   {
-                  localStorage.getItem("showPalpite") &&
-                  <span
-                    className="palpite">
-                    {value[`palpite${index}`]}
-                  </span>
+                    localStorage.getItem(`showPalpite${index}`) &&
+                    <span className="palpite">
+                      {value[`palpite${index}`]}
+                    </span>
                   }
-  
                 </span>
               </div>
 
-              <p>
-                <span>{value.date.slice(0, 10).replaceAll("-", "/")}</span> <br /> <br />
-                <span>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</span> <br /> <br />
-                <span>Local: {value.venue}</span>
-              </p>
+              <p>{fullDate}</p>
+              <p>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</p>
+              <p>Local: {value.venue}</p>
             </div>
           </div>
         ))
