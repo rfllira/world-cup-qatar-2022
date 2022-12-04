@@ -1,55 +1,40 @@
-/* Criar uma aplicação usando React JS que lista os jogos de hoje da copa, e permita seu papite neles.
+//1. Trocar fuso horario para o do brasil
+//2. acertar o desing
+//  2.1 colocar as informaçoes do jogo em butoes desabiliados
+//  2.2 colocar os jogos na horizontal
+//  2.3 mudar background
+//  2.4 mudar font
+//  2.5 colocar resposta para quem tentar clicar no botao de palpute quando ele estiver desativado
+//  2.6 colocar obsevação de ate quando o papite poderá ser atualizado
 
-Requisitos:
-
-1. A lista dos jogos de hoje podem ser mockados, mas fique à vontade para criar ou consumir uma API de sua preferência. [CONCLUIDO]
-
-2. Você precisa salvar o palpite pra não perdê-lo ao recarregar a página. Recomendamos: Local Storage. [CONCLUIDO]
-
-3. Um palpite poderá ser alterado até 30min antes do início do jogo. [EM ANDAMENTO]
-
-4. Cada jogo deve ter: [CONCLUIDO]
-
-   - Nome do time 1 e time 2
-   - Abreviação do time 1 e time 2
-   - Data e hora de início da partida
-   - Estádio da partida
-
-5. O palpite deve ser somente da quantidade de gols de cada time: [CONCLUIDO]
-
-   Ex: BRA 2 x 3 CAM
-
-6. A sua aplicação deve ser fácil de usar, clara e funcione corretamente. [CONCLUIDO]
-
-Entrega:
-
-- A aplicação deve estar no GitHub e deve informar os procedimentos para executá-la.
-
-- Ao concluir o teste, responda a esse email, com o link do repositório. E se conseguiu executar ou não como queria...*/
 
 // api: https://copa22.medeiro.tech/matches/today
 
-
-
-import React, { useState, useEffect } from "react"
 import { InputNumber } from 'primereact/inputnumber';
+import React, { useState, useEffect } from "react"
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import api from "../service/api"
 
 export default function Body() {
   const [date] = useState(new Date())
+  const [clubsApi, setClubsApi] = useState([])
+  const [getIndex, setGetIndex] = useState("")
+  const [awayTeam, setAwayTeam] = useState("")
+  const [homeTeam, setHomeTeam] = useState("")
+  const [showDialog, setShowDialog] = useState(false)
   const [minutsCurrent] = useState((date.getHours() * 60) + date.getMinutes())
   const [fullDate] = useState(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`)
-  const [clubsApi, setClubsApi] = useState([])
-  const [showDialog, setShowDialog] = useState(false)
-  const [homeTeam, setHomeTeam] = useState("")
-  const [awayTeam, setAwayTeam] = useState("")
-  const [getIndex, setGetIndex] = useState("")
 
   const requestApi = () => api.get("/matches/today").then((value) => setClubsApi(value.data))
+  const resetLocalStorage = () => {
+    if (localStorage.getItem("day") != date.getDate()) localStorage.clear()
+  }
 
-  useEffect(() => { requestApi() }, [])
+  useEffect(() => {
+    requestApi()
+    resetLocalStorage()
+  }, [])
 
   clubsApi.map((value, index) => {
     for (let i = 0; i <= clubsApi.length; i++) {
@@ -57,17 +42,17 @@ export default function Body() {
     }
   })
 
-  // console.log(minutsCurrent);
-  // console.log(date.getHours() *60 + );
+  console.log(date.getDate());
+  console.log(localStorage.getItem("day"));
 
   return (
     <div className="body">
-      <h1>Eventos diários da Copa do mundo no Qatar 2022</h1>
+      <h1>Horário dos confrontos Copa do mundo 2022 no Qatar</h1>
       {
         clubsApi.map((value, index) => (
           <div key={value.id} className="block-of-clubs">
             <div>
-              <div>
+            <div>
                 <span className="match">
                   <p>{value.homeTeam.name} ({value.homeTeam.country}) {value.homeTeam.goals}</p>
                   <p>X</p>
@@ -77,17 +62,13 @@ export default function Body() {
                 <span className="palpite-area">
                   <Button
                     className="p-button-outlined"
-                    label="Dar Palpite"
-                    disabled={(minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) + date.getMinutes())) ? true : false}
+                    label={localStorage.getItem(`showPalpite${index}`) ? "Editar Palpite" : "Dar Palpite"}
+                    disabled={(minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)) ? true : false}
                     onClick={() => {
                       setShowDialog(true)
                       setAwayTeam(value.awayTeam.country)
                       setHomeTeam(value.homeTeam.country)
                       setGetIndex(index)
-                      // console.log((Number(value.date.slice(11, 13)) - 7));
-                      // console.log((Number(value.date.slice(11, 13)) - 3));
-                      // console.log(((Number(value.date.slice(11, 13)) - 3) * 60));
-                      // console.log((((Number(value.date.slice(11, 13)) - 3) * 60) + (date.getMinutes() - 30)));
                     }}
                   />
                   <Dialog
@@ -113,7 +94,11 @@ export default function Body() {
                         <InputNumber
                           inputId="minmax-buttons"
                           value={localStorage.getItem(`homeTeamGoals${getIndex}`)}
-                          onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
+                          // onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
+                          onValueChange={(e) => {
+                            localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)
+                            localStorage.setItem("day", `${date.getDate()}`)
+                          }}
                           mode="decimal"
                           showButtons min={0}
                           max={100}
@@ -124,7 +109,10 @@ export default function Body() {
                         <InputNumber
                           inputId="minmax-buttons"
                           value={localStorage.getItem(`awayTeamGoals${getIndex}`)}
-                          onValueChange={(e) => localStorage.setItem(`awayTeamGoals${getIndex}`, `${e.value}`)}
+                          onValueChange={(e) => {
+                            localStorage.setItem(`awayTeamGoals${getIndex}`, `${e.value}`)
+                            localStorage.setItem("day", `${date.getDate()}`)
+                          }}
                           mode="decimal"
                           showButtons min={0}
                           max={100}
@@ -145,8 +133,8 @@ export default function Body() {
               <p>{fullDate}</p>
               <p>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</p>
               <p>Local: {value.venue}</p>
-            </div>
           </div>
+          </div>          
         ))
       }
     </div>
