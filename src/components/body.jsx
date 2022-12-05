@@ -3,9 +3,9 @@
 //  2.1 colocar as informaçoes do jogo em butoes desabiliados [CONCLUIDO]
 //  2.2 colocar os jogos na horizontal [CONCLUIDO]
 //  2.3 mudar background [CONCLUIDO]
-//  2.4 mudar font 
+//  2.4 mudar font  [CONCLUIDO]
 //  2.5 colocar resposta para quem tentar clicar no botao de palpIte quando ele estiver desativado [CONCLUIDO]
-//  2.6 colocar obsevação de ate quando o papite poderá ser atualizado
+//  2.6 colocar obsevação de ate quando o papite poderá ser atualizado [CONCLUIDO]
 
 
 // api: https://copa22.medeiro.tech/matches/today
@@ -133,9 +133,11 @@ export default function Body() {
                     </Dialog>
                     {
                       localStorage.getItem(`showPalpite${index}`) &&
-                      <span className="palpite">
-                        {value[`palpite${index}`]}
-                      </span>
+                      <div className="palpite">
+                        <span>
+                          {value[`palpite${index}`]}
+                        </span>
+                      </div>
                     }
                   </span>
                 </div>
