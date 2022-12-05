@@ -24,7 +24,7 @@ html {
 }
 
 .title {
-  width: 400px;
+  width: 450px;
   text-align: center;
   color: white;
   display: flex;
@@ -35,7 +35,7 @@ html {
   flex-direction: column;
 
   .fristSubTitle {
-    font-size: 38px;
+    font-size: 35px;
   }
 
   @media(max-Width: 400px) {
