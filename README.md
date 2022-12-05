@@ -19,7 +19,7 @@
 
 ## English
 
-* This is a frontend application with the theme of the 2022 world cup and in it you can view the games of the day, as well as the date, time and place where the match will be played. In addition, it is also possible to give your guess of what the score of each game will be.
+* This is a frontend application with the theme of the 2022 world cup and in it you can view the games of the day, as well as the date, time and place where the match will be played. In addition, it is also possible to place your bet on the score of each game.
 
 * It was built in React.JS and consumes this api: ```https://copa22.medeiro.tech/matches/today```
 
