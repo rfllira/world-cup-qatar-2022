@@ -127,7 +127,7 @@ export default function Body() {
                           />
                         </p>
 
-                        <p>ATENÇÃO: vocẽ poderá mudificar seu palpite até 30 minutos antes do inicio da partida.</p>
+                        <p>ATENÇÃO: você poderá mudificar seu palpite até 30 minutos antes do inicio da partida.</p>
                       </div>
 
                     </Dialog>
