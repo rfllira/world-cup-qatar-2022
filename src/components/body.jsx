@@ -42,101 +42,103 @@ export default function Body() {
     }
   })
 
-  console.log(date.getDate());
-  console.log(localStorage.getItem("day"));
-
   return (
-    <div className="body">
-      <h1>Horário dos confrontos Copa do mundo 2022 no Qatar</h1>
-      {
-        clubsApi.map((value, index) => (
-          <div key={value.id} className="block-of-clubs">
-            <div>
-            <div>
-                <span className="match">
-                  <p>{value.homeTeam.name} ({value.homeTeam.country}) {value.homeTeam.goals}</p>
-                  <p>X</p>
-                  <p> {value.awayTeam.goals} {value.awayTeam.name} ({value.awayTeam.country})</p>
-                </span>
 
-                <span className="palpite-area">
-                  <Button
-                    className="p-button-outlined"
-                    label={localStorage.getItem(`showPalpite${index}`) ? "Editar Palpite" : "Dar Palpite"}
-                    disabled={(minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)) ? true : false}
-                    onClick={() => {
-                      setShowDialog(true)
-                      setAwayTeam(value.awayTeam.country)
-                      setHomeTeam(value.homeTeam.country)
-                      setGetIndex(index)
-                    }}
-                  />
-                  <Dialog
-                    visible={showDialog}
-                    style={{ width: "400px" }}
-                    onHide={() => setShowDialog(false)}
-                    header={`Dar palpite na partida ${homeTeam} X ${awayTeam}`}
-                    footer={() => (
-                      <Button
-                        label="Salvar"
-                        icon="pi pi-check"
-                        className="p-button-success"
-                        onClick={() => {
-                          localStorage.setItem(`showPalpite${getIndex}`, "true")
-                          setShowDialog(false)
-                        }}
-                      />
-                    )}
-                  >
-                    <div className="dialog">
-                      <p>
-                        {homeTeam}
-                        <InputNumber
-                          inputId="minmax-buttons"
-                          value={localStorage.getItem(`homeTeamGoals${getIndex}`)}
-                          // onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
-                          onValueChange={(e) => {
-                            localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)
-                            localStorage.setItem("day", `${date.getDate()}`)
-                          }}
-                          mode="decimal"
-                          showButtons min={0}
-                          max={100}
-                        />
-                      </p>
-                      <p>
-                        {awayTeam}
-                        <InputNumber
-                          inputId="minmax-buttons"
-                          value={localStorage.getItem(`awayTeamGoals${getIndex}`)}
-                          onValueChange={(e) => {
-                            localStorage.setItem(`awayTeamGoals${getIndex}`, `${e.value}`)
-                            localStorage.setItem("day", `${date.getDate()}`)
-                          }}
-                          mode="decimal"
-                          showButtons min={0}
-                          max={100}
-                        />
-                      </p>
-                    </div>
+    <div>
+      <div className='title'>
+        <h1>Horário dos confrontos Copa do mundo 2022 no Qatar</h1>
+      </div>
+      <div className="body">
+        {
+          clubsApi.map((value, index) => (
+            <div key={value.id} className="block-of-clubs">
+              <div>
+                <div>
+                  <span className="match">
+                    <p>{value.homeTeam.name} ({value.homeTeam.country}) {value.homeTeam.goals}</p>
+                    <p>X</p>
+                    <p> {value.awayTeam.goals} {value.awayTeam.name} ({value.awayTeam.country})</p>
+                  </span>
 
-                  </Dialog>
-                  {
-                    localStorage.getItem(`showPalpite${index}`) &&
-                    <span className="palpite">
-                      {value[`palpite${index}`]}
-                    </span>
-                  }
-                </span>
+                  <span className="palpite-area">
+                    <Button
+                      className="p-button-outlined"
+                      label={localStorage.getItem(`showPalpite${index}`) ? "Editar Palpite" : "Dar Palpite"}
+                      disabled={(minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)) ? true : false}
+                      onClick={() => {
+                        setShowDialog(true)
+                        setAwayTeam(value.awayTeam.country)
+                        setHomeTeam(value.homeTeam.country)
+                        setGetIndex(index)
+                      }}
+                    />
+                    <Dialog
+                      visible={showDialog}
+                      style={{ width: "400px" }}
+                      onHide={() => setShowDialog(false)}
+                      header={`Dar palpite na partida ${homeTeam} X ${awayTeam}`}
+                      footer={() => (
+                        <Button
+                          label="Salvar"
+                          icon="pi pi-check"
+                          className="p-button-success"
+                          onClick={() => {
+                            localStorage.setItem(`showPalpite${getIndex}`, "true")
+                            setShowDialog(false)
+                          }}
+                        />
+                      )}
+                    >
+                      <div className="dialog">
+                        <p>
+                          {homeTeam}
+                          <InputNumber
+                            inputId="minmax-buttons"
+                            value={localStorage.getItem(`homeTeamGoals${getIndex}`)}
+                            // onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
+                            onValueChange={(e) => {
+                              localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)
+                              localStorage.setItem("day", `${date.getDate()}`)
+                            }}
+                            mode="decimal"
+                            showButtons min={0}
+                            max={100}
+                          />
+                        </p>
+                        <p>
+                          {awayTeam}
+                          <InputNumber
+                            inputId="minmax-buttons"
+                            value={localStorage.getItem(`awayTeamGoals${getIndex}`)}
+                            onValueChange={(e) => {
+                              localStorage.setItem(`awayTeamGoals${getIndex}`, `${e.value}`)
+                              localStorage.setItem("day", `${date.getDate()}`)
+                            }}
+                            mode="decimal"
+                            showButtons min={0}
+                            max={100}
+                          />
+                        </p>
+                      </div>
+
+                    </Dialog>
+                    {
+                      localStorage.getItem(`showPalpite${index}`) &&
+                      <span className="palpite">
+                        {value[`palpite${index}`]}
+                      </span>
+                    }
+                  </span>
+                </div>
+
+                <p>{fullDate}</p>
+                <p>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</p>
+                <p>Local: {value.venue}</p>
               </div>
-
-              <p>{fullDate}</p>
-              <p>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</p>
-              <p>Local: {value.venue}</p>
-          </div>
-          </div>          
-        ))
-      }
+            </div>
+          ))
+        }
+      </div>
     </div>
   )
 }

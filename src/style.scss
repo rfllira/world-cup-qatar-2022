@@ -1,7 +1,8 @@
 html {
-  background: url("/background.svg") center center no-repeat;
+  background: url("4340362-qatar-2022.jpg") center center no-repeat;
   background-size: cover;
-  background-color: #121214;
+  // background-color: #121214;
+  height: 100%;
 }
 
 .App {
@@ -19,20 +20,28 @@ html {
   }
 }
 
+.title {
+  width: 400px;
+  text-align: center;
+  color: white;
+  display: flex;
+  margin: auto;
+
+  @media(max-Width: 400px) {
+    width: 300px;
+  }
+}
+
 .body {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
 
-  h1 {
-    width: 400px;
-    text-align: center;
-
-    @media(max-Width: 400px) {
-      width: 300px;
-    }
+  @media(max-Width: 400px) {
+    font-size: 15px;
+    width: 300px;
+    flex-direction: column;
   }
 
   .block-of-clubs {
