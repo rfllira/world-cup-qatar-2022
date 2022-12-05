@@ -1,5 +1,5 @@
 html {
-  background: url("/world-cup-qatar-2022/public/4340362-qatar-2022.jpg") center center no-repeat;
+  background: url("4340362-qatar-2022.jpg") center center no-repeat;
   background-size: cover;
   // background-color: #121214;
   height: 100%;
@@ -38,7 +38,7 @@ html {
   align-items: center;
   color: white;
 
-  @media(max-Width: 500px) {
+  @media(max-Width: 600px) {
     flex-direction: column;
   }
 
