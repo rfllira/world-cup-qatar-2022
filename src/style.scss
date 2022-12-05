@@ -30,6 +30,13 @@ html {
   display: flex;
   margin: auto;
   font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .fristSubTitle {
+    font-size: 38px;
+  }
 
   @media(max-Width: 400px) {
     width: 300px;
