@@ -1,6 +1,6 @@
 //1. Trocar fuso horario para o do brasil
 //2. acertar o desing
-//  2.1 colocar as informaçoes do jogo em butoes desabiliados
+//  2.1 colocar as informaçoes do jogo em butoes desabiliados [CONCLUIDO]
 //  2.2 colocar os jogos na horizontal [CONCLUIDO]
 //  2.3 mudar background [CONCLUIDO]
 //  2.4 mudar font 
@@ -72,6 +72,13 @@ export default function Body() {
                         setGetIndex(index)
                       }}
                     />
+                    {
+                      (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)
+                      &&
+                      <div className='alert'>
+                        <span>Periodo de palpite esgotado</span>
+                      </div>
+                    }
                     <Dialog
                       visible={showDialog}
                       style={{ width: "400px" }}
