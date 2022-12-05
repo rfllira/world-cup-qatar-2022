@@ -1,9 +1,9 @@
 //1. Trocar fuso horario para o do brasil
 //2. acertar o desing
 //  2.1 colocar as informaçoes do jogo em butoes desabiliados
-//  2.2 colocar os jogos na horizontal
-//  2.3 mudar background
-//  2.4 mudar font
+//  2.2 colocar os jogos na horizontal [CONCLUIDO]
+//  2.3 mudar background [CONCLUIDO PARCIALMENTE]
+//  2.4 mudar font 
 //  2.5 colocar resposta para quem tentar clicar no botao de palpute quando ele estiver desativado
 //  2.6 colocar obsevação de ate quando o papite poderá ser atualizado
 
