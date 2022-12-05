@@ -2,9 +2,9 @@
 //2. acertar o desing
 //  2.1 colocar as informaçoes do jogo em butoes desabiliados
 //  2.2 colocar os jogos na horizontal [CONCLUIDO]
-//  2.3 mudar background [CONCLUIDO PARCIALMENTE]
+//  2.3 mudar background [CONCLUIDO]
 //  2.4 mudar font 
-//  2.5 colocar resposta para quem tentar clicar no botao de palpute quando ele estiver desativado
+//  2.5 colocar resposta para quem tentar clicar no botao de palpIte quando ele estiver desativado
 //  2.6 colocar obsevação de ate quando o papite poderá ser atualizado
 
 
@@ -131,9 +131,33 @@ export default function Body() {
                   </span>
                 </div>
 
-                <p>{fullDate}</p>
-                <p>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</p>
-                <p>Local: {value.venue}</p>
+                <div className='infosMatch'>
+                  <p>
+                    <Button
+                      label={`${fullDate}`}
+                      disabled="true"
+                      className="p-button-raised p-button-text p-button-plain"
+                    />
+
+                    <Button
+                      label={`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}
+                      disabled="true"
+                      className="p-button-raised p-button-text p-button-plain"
+                    />
+                  </p>
+
+                  <p>
+                    <Button
+                      label={`Local: ${value.venue}`}
+                      disabled="true"
+                      className="p-button-raised p-button-text p-button-plain"
+                    />
+                  </p>
+                </div>
+
+                {/* <p>{fullDate}</p> */}
+                {/* <p>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</p> */}
+                {/* <p>Local: {value.venue}</p> */}
               </div>
             </div>
           ))
