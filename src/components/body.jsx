@@ -101,7 +101,7 @@ export default function Body() {
                           {homeTeam}
                           <InputNumber
                             inputId="minmax-buttons"
-                            value={localStorage.getItem(`homeTeamGoals${getIndex}`)}
+                            value={localStorage.getItem(`homeTeamGoals${getIndex}`) || 0}
                             // onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
                             onValueChange={(e) => {
                               localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)
@@ -116,7 +116,7 @@ export default function Body() {
                           {awayTeam}
                           <InputNumber
                             inputId="minmax-buttons"
-                            value={localStorage.getItem(`awayTeamGoals${getIndex}`)}
+                            value={localStorage.getItem(`awayTeamGoals${getIndex}`) || 0}
                             onValueChange={(e) => {
                               localStorage.setItem(`awayTeamGoals${getIndex}`, `${e.value}`)
                               localStorage.setItem("day", `${date.getDate()}`)
