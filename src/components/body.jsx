@@ -67,7 +67,7 @@ export default function Body() {
                     {
                       (minutsCurrent >= ((handleHours(value) * 60) - 30)) ? (
                         <div className='alert'>
-                          <span>Periodo de palpite esgotado</span>
+                          <span>Periodo de palpite expirado</span>
                         </div>) :
                         (<span></span>)
                     }
@@ -113,8 +113,8 @@ export default function Body() {
                             value={localStorage.getItem(`homeTeamGoals${getIndex}`) || 0}
                             onValueChange={(e) => setGoalsHomeTeam(e.value)}
                             mode="decimal"
-                            showButtons min={0}
-                            max={100}
+                            min={0}
+                            max={99}
                           />
                         </p>
 
@@ -125,8 +125,8 @@ export default function Body() {
                             value={localStorage.getItem(`awayTeamGoals${getIndex}`) || 0}
                             onValueChange={(e) => setGoalsAwayTeam(e.value)}
                             mode="decimal"
-                            showButtons min={0}
-                            max={100}
+                            min={0}
+                            max={99}
                           />
                         </p>
 
