@@ -17,6 +17,10 @@ html {
 .Header {
   background-color: transparent;
   padding-left: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Roboto', sans-serif;
+  color: white;
   
   img {
     width: 75px;
