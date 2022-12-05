@@ -33,7 +33,7 @@ export default function Body() {
   return (
     <div>
       <div className='title'>
-        {/* <h1>Horário dos confrontos da Copa do mundo 2022 no Qatar</h1> */}
+        <h1>Horário dos confrontos da Copa do mundo 2022 no Qatar</h1>
       </div>
       <div className="body">
         {
