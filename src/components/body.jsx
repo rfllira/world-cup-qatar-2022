@@ -5,6 +5,8 @@ import { Dialog } from 'primereact/dialog';
 import api from "../service/api"
 
 export default function Body() {
+  const [goalsHomeTime, setGoalsHomeTeam] = useState(0)
+  const [goalsAwayTime, setGoalsAwayTeam] = useState(0)
   const [date] = useState(new Date())
   const [clubsApi, setClubsApi] = useState([])
   const [getIndex, setGetIndex] = useState("")
@@ -60,6 +62,7 @@ export default function Body() {
                         setGetIndex(index)
                       }}
                     />
+
                     {
                       (minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)) ? (
                         <div className='alert'>
@@ -67,55 +70,68 @@ export default function Body() {
                         </div>) :
                         (<span></span>)
                     }
+
                     <Dialog
                       visible={showDialog}
                       style={{ width: "400px" }}
                       onHide={() => setShowDialog(false)}
                       header={`Dar palpite na partida ${homeTeam} X ${awayTeam}`}
                       footer={() => (
-                        <Button
-                          label="Salvar"
-                          icon="pi pi-check"
-                          className="p-button-success"
-                          onClick={() => {
-                            localStorage.setItem(`showPalpite${getIndex}`, "true")
-                            setShowDialog(false)
-                          }}
-                        />
+                        <div>
+                          <Button
+                            label="Apagar"
+                            icon="pi pi-trash"
+                            className="p-button-danger"
+                            onClick={() => {
+                              localStorage.removeItem(`showPalpite${getIndex}`)
+                              localStorage.removeItem(`homeTeamGoals${getIndex}`)
+                              localStorage.removeItem(`awayTeamGoals${getIndex}`)
+                              setShowDialog(false)
+                            }}
+                          />
+                          <Button
+                            label="Salvar"
+                            icon="pi pi-check"
+                            className="p-button-success"
+                            onClick={() => {
+                              localStorage.setItem(`showPalpite${getIndex}`, "true")
+                              localStorage.setItem("day", `${date.getDate()}`)
+                              localStorage.setItem(`homeTeamGoals${getIndex}`, `${goalsHomeTime}`)
+                              localStorage.setItem(`awayTeamGoals${getIndex}`, `${goalsAwayTime}`)
+                              setShowDialog(false)
+                            }}
+                          />
+                        </div>
                       )}
                     >
                       <div className="dialog">
                         <p>
-                          {homeTeam}
+                          {`${homeTeam}: `}
                           <InputNumber
                             inputId="minmax-buttons"
                             value={localStorage.getItem(`homeTeamGoals${getIndex}`) || 0}
-                            // onValueChange={(e) => localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)}
-                            onValueChange={(e) => {
-                              localStorage.setItem(`homeTeamGoals${getIndex}`, `${e.value}`)
-                              localStorage.setItem("day", `${date.getDate()}`)
-                            }}
-                            mode="decimal"
-                            showButtons min={0}
-                            max={100}
-                          />
-                        </p>
-                        <p>
-                          {awayTeam}
-                          <InputNumber
-                            inputId="minmax-buttons"
-                            value={localStorage.getItem(`awayTeamGoals${getIndex}`) || 0}
-                            onValueChange={(e) => {
-                              localStorage.setItem(`awayTeamGoals${getIndex}`, `${e.value}`)
-                              localStorage.setItem("day", `${date.getDate()}`)
-                            }}
+                            onValueChange={(e) => setGoalsHomeTeam(e.value)}
                             mode="decimal"
                             showButtons min={0}
                             max={100}
                           />
                         </p>
 
-                        <p>ATENÇÃO: você poderá modificar seu palpite até 30 minutos antes do inicio da partida.</p>
+                        <p>
+                          {`${awayTeam}: `}
+                          <InputNumber
+                            inputId="minmax-buttons"
+                            value={localStorage.getItem(`awayTeamGoals${getIndex}`) || 0}
+                            onValueChange={(e) => setGoalsAwayTeam(e.value)}
+                            mode="decimal"
+                            showButtons min={0}
+                            max={100}
+                          />
+                        </p>
+
+                        <p>
+                          ATENÇÃO: você poderá modificar seu palpite até 30 minutos antes do inicio da partida.
+                        </p>
                       </div>
 
                     </Dialog>
