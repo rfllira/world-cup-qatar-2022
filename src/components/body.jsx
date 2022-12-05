@@ -5,18 +5,19 @@ import { Dialog } from 'primereact/dialog';
 import api from "../service/api"
 
 export default function Body() {
-  const [goalsHomeTime, setGoalsHomeTeam] = useState(0)
-  const [goalsAwayTime, setGoalsAwayTeam] = useState(0)
   const [date] = useState(new Date())
   const [clubsApi, setClubsApi] = useState([])
   const [getIndex, setGetIndex] = useState("")
   const [awayTeam, setAwayTeam] = useState("")
   const [homeTeam, setHomeTeam] = useState("")
   const [showDialog, setShowDialog] = useState(false)
+  const [goalsAwayTime, setGoalsAwayTeam] = useState(0)
+  const [goalsHomeTime, setGoalsHomeTeam] = useState(0)
   const [minutsCurrent] = useState((date.getHours() * 60) + date.getMinutes())
   const [fullDate] = useState(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`)
 
   const requestApi = () => api.get("/matches/today").then((value) => setClubsApi(value.data))
+  const handleHours = (value) => value.date.slice(11, 13) - 3
   const resetLocalStorage = () => {
     if (localStorage.getItem("day") != date.getDate()) localStorage.clear()
   }
@@ -54,7 +55,7 @@ export default function Body() {
                     <Button
                       className="p-button-outlined"
                       label={localStorage.getItem(`showPalpite${index}`) ? "Editar Palpite" : "Dar Palpite"}
-                      disabled={(minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)) ? true : false}
+                      disabled={(minutsCurrent >= ((handleHours(value) * 60) - 30)) ? true : false}
                       onClick={() => {
                         setShowDialog(true)
                         setAwayTeam(value.awayTeam.country)
@@ -64,7 +65,7 @@ export default function Body() {
                     />
 
                     {
-                      (minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)) ? (
+                      (minutsCurrent >= ((handleHours(value) * 60) - 30)) ? (
                         <div className='alert'>
                           <span>Periodo de palpite esgotado</span>
                         </div>) :
@@ -155,7 +156,7 @@ export default function Body() {
                     />
 
                     <Button
-                      label={`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}
+                      label={`${handleHours(value)}:${value.date.slice(14, 16)}`}
                       disabled="true"
                       className="p-button-raised p-button-text p-button-plain"
                     />
