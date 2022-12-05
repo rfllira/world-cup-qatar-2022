@@ -68,7 +68,10 @@ html {
     }
 
     @media(max-Width: 400px) {
-      width: 300px;
+      max-width: 300px;
+      min-width: 300px;
+      max-height: 325px;
+      min-height: 325px;
     }
 
     .match {
