@@ -4,7 +4,7 @@
 //  2.2 colocar os jogos na horizontal [CONCLUIDO]
 //  2.3 mudar background [CONCLUIDO]
 //  2.4 mudar font 
-//  2.5 colocar resposta para quem tentar clicar no botao de palpIte quando ele estiver desativado
+//  2.5 colocar resposta para quem tentar clicar no botao de palpIte quando ele estiver desativado [CONCLUIDO]
 //  2.6 colocar obsevação de ate quando o papite poderá ser atualizado
 
 
@@ -73,11 +73,11 @@ export default function Body() {
                       }}
                     />
                     {
-                      (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)
-                      &&
-                      <div className='alert'>
-                        <span>Periodo de palpite esgotado</span>
-                      </div>
+                      (minutsCurrent >= (((Number(value.date.slice(11, 13)) - 3) * 60) - 30)) ? (
+                        <div className='alert'>
+                          <span>Periodo de palpite esgotado</span>
+                        </div>) :
+                        (<span></span>)
                     }
                     <Dialog
                       visible={showDialog}
@@ -126,6 +126,8 @@ export default function Body() {
                             max={100}
                           />
                         </p>
+
+                        <p>ATENÇÂO: vocẽ poderá mudificar seu palpite até 30 minutos antes do inicio da partida.</p>
                       </div>
 
                     </Dialog>

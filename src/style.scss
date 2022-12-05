@@ -30,6 +30,7 @@ html {
   color: white;
   display: flex;
   margin: auto;
+  font-family: 'Roboto', sans-serif;
 
   @media(max-Width: 400px) {
     width: 300px;
@@ -48,18 +49,25 @@ html {
 
   .block-of-clubs {
     display: flex;
-    width: 400px;
+    max-width: 400px;
+    min-width: 400px;
+    max-height: 350px;
+    min-height: 350px;
     background-color: rgb(216, 216, 216);
     justify-content: center;
     border-radius: 10px;
     padding: 10px;
     margin: 5px;
     color: black;
+    font-family: 'Roboto', sans-serif;
     font-size: 20px;
     font-weight: 500;
 
-    @media(max-Width: 400px) {
+    @media(max-Width: 800px) {
       font-size: 15px;
+    }
+
+    @media(max-Width: 400px) {
       width: 300px;
     }
 
@@ -88,6 +96,4 @@ html {
 
 .alert {
   color: #8c0033;
-  display: flex;
-  justify-content: center;
 }
