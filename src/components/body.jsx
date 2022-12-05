@@ -1,15 +1,3 @@
-//1. Trocar fuso horario para o do brasil
-//2. acertar o desing
-//  2.1 colocar as informaçoes do jogo em butoes desabiliados [CONCLUIDO]
-//  2.2 colocar os jogos na horizontal [CONCLUIDO]
-//  2.3 mudar background [CONCLUIDO]
-//  2.4 mudar font  [CONCLUIDO]
-//  2.5 colocar resposta para quem tentar clicar no botao de palpIte quando ele estiver desativado [CONCLUIDO]
-//  2.6 colocar obsevação de ate quando o papite poderá ser atualizado [CONCLUIDO]
-
-
-// api: https://copa22.medeiro.tech/matches/today
-
 import { InputNumber } from 'primereact/inputnumber';
 import React, { useState, useEffect } from "react"
 import { Button } from 'primereact/button';
@@ -165,10 +153,6 @@ export default function Body() {
                     />
                   </p>
                 </div>
-
-                {/* <p>{fullDate}</p> */}
-                {/* <p>Começa as {`${Number(value.date.slice(11, 13)) - 3}:${value.date.slice(14, 16)}`}</p> */}
-                {/* <p>Local: {value.venue}</p> */}
               </div>
             </div>
           ))
