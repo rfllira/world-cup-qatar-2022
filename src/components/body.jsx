@@ -39,7 +39,7 @@ export default function Body() {
         <h1 className='fristSubTitle'>Copa do Mundo 2022 - Qatar</h1>
         {
           (clubsApi.length >= 1) ?
-            <h1>Jogos do dia</h1> :
+            <h1 className='alert-not-match'>Jogos do dia</h1> :
             <span></span>
         }
       </div>
