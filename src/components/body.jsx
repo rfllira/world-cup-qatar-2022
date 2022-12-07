@@ -37,142 +37,149 @@ export default function Body() {
     <div>
       <div className='title'>
         <h1 className='fristSubTitle'>Copa do Mundo 2022 - Qatar</h1>
-        <h1>Jogos do dia</h1>
+        {
+          (clubsApi.length >= 1) ?
+            <h1>Jogos do dia</h1> :
+            <span></span>
+        }
       </div>
       <div className="body">
         {
-          clubsApi.map((value, index) => (
-            <div key={value.id} className="block-of-clubs">
-              <div>
+          (clubsApi.length >= 1) ? (
+            clubsApi.map((value, index) => (
+              <div key={value.id} className="block-of-clubs">
                 <div>
-                  <span className="match">
-                    <p>{value.homeTeam.name} ({value.homeTeam.country}) {value.homeTeam.goals}</p>
-                    <p>X</p>
-                    <p> {value.awayTeam.goals} {value.awayTeam.name} ({value.awayTeam.country})</p>
-                  </span>
+                  <div>
+                    <span className="match">
+                      <p>{value.homeTeam.name} ({value.homeTeam.country}) {value.homeTeam.goals}</p>
+                      <p>X</p>
+                      <p> {value.awayTeam.goals} {value.awayTeam.name} ({value.awayTeam.country})</p>
+                    </span>
 
-                  <span className="palpite-area">
-                    <Button
-                      className="p-button-outlined"
-                      label={localStorage.getItem(`showPalpite${index}`) ? "Editar Palpite" : "Dar Palpite"}
-                      disabled={(minutsCurrent >= ((handleHours(value) * 60) - 30)) ? true : false}
-                      onClick={() => {
-                        setShowDialog(true)
-                        setAwayTeam(value.awayTeam.country)
-                        setHomeTeam(value.homeTeam.country)
-                        setGetIndex(index)
-                      }}
-                    />
+                    <span className="palpite-area">
+                      <Button
+                        className="p-button-outlined"
+                        label={localStorage.getItem(`showPalpite${index}`) ? "Editar Palpite" : "Dar Palpite"}
+                        disabled={(minutsCurrent >= ((handleHours(value) * 60) - 30)) ? true : false}
+                        onClick={() => {
+                          setShowDialog(true)
+                          setAwayTeam(value.awayTeam.country)
+                          setHomeTeam(value.homeTeam.country)
+                          setGetIndex(index)
+                        }}
+                      />
 
-                    {
-                      (minutsCurrent >= ((handleHours(value) * 60) - 30)) ? (
-                        <div className='alert'>
-                          <span>Periodo de palpite expirado</span>
-                        </div>) :
-                        (<span></span>)
-                    }
+                      {
+                        (minutsCurrent >= ((handleHours(value) * 60) - 30)) ? (
+                          <div className='alert'>
+                            <span>Periodo de palpite expirado</span>
+                          </div>) :
+                          (<span></span>)
+                      }
 
-                    <Dialog
-                      visible={showDialog}
-                      style={{ width: "400px" }}
-                      onHide={() => setShowDialog(false)}
-                      header={`Dar palpite na partida ${homeTeam} X ${awayTeam}`}
-                      footer={() => (
-                        <div>
-                          <Button
-                            label="Apagar"
-                            icon="pi pi-trash"
-                            className="p-button-danger"
-                            onClick={() => {
-                              localStorage.removeItem(`showPalpite${getIndex}`)
-                              localStorage.removeItem(`homeTeamGoals${getIndex}`)
-                              localStorage.removeItem(`awayTeamGoals${getIndex}`)
-                              setShowDialog(false)
-                            }}
-                          />
-                          <Button
-                            label="Salvar"
-                            icon="pi pi-check"
-                            className="p-button-success"
-                            onClick={() => {
-                              localStorage.setItem(`showPalpite${getIndex}`, "true")
-                              localStorage.setItem("day", `${date.getDate()}`)
-                              localStorage.setItem(`homeTeamGoals${getIndex}`, `${goalsHomeTime}`)
-                              localStorage.setItem(`awayTeamGoals${getIndex}`, `${goalsAwayTime}`)
-                              setShowDialog(false)
-                            }}
-                          />
+                      <Dialog
+                        visible={showDialog}
+                        style={{ width: "400px" }}
+                        onHide={() => setShowDialog(false)}
+                        header={`Dar palpite na partida ${homeTeam} X ${awayTeam}`}
+                        footer={() => (
+                          <div>
+                            <Button
+                              label="Apagar"
+                              icon="pi pi-trash"
+                              className="p-button-danger"
+                              onClick={() => {
+                                localStorage.removeItem(`showPalpite${getIndex}`)
+                                localStorage.removeItem(`homeTeamGoals${getIndex}`)
+                                localStorage.removeItem(`awayTeamGoals${getIndex}`)
+                                setShowDialog(false)
+                              }}
+                            />
+                            <Button
+                              label="Salvar"
+                              icon="pi pi-check"
+                              className="p-button-success"
+                              onClick={() => {
+                                localStorage.setItem(`showPalpite${getIndex}`, "true")
+                                localStorage.setItem("day", `${date.getDate()}`)
+                                localStorage.setItem(`homeTeamGoals${getIndex}`, `${goalsHomeTime}`)
+                                localStorage.setItem(`awayTeamGoals${getIndex}`, `${goalsAwayTime}`)
+                                setShowDialog(false)
+                              }}
+                            />
+                          </div>
+                        )}
+                      >
+                        <div className="dialog">
+                          <p>
+                            {`${homeTeam}: `}
+                            <InputNumber
+                              inputId="minmax-buttons"
+                              value={localStorage.getItem(`homeTeamGoals${getIndex}`) || 0}
+                              onValueChange={(e) => setGoalsHomeTeam(e.value)}
+                              mode="decimal"
+                              min={0}
+                              max={99}
+                            />
+                          </p>
+
+                          <p>
+                            {`${awayTeam}: `}
+                            <InputNumber
+                              inputId="minmax-buttons"
+                              value={localStorage.getItem(`awayTeamGoals${getIndex}`) || 0}
+                              onValueChange={(e) => setGoalsAwayTeam(e.value)}
+                              mode="decimal"
+                              min={0}
+                              max={99}
+                            />
+                          </p>
+
+                          <p>
+                            ATENÇÃO: você poderá modificar seu palpite até 30 minutos antes do inicio da partida.
+                          </p>
                         </div>
-                      )}
-                    >
-                      <div className="dialog">
-                        <p>
-                          {`${homeTeam}: `}
-                          <InputNumber
-                            inputId="minmax-buttons"
-                            value={localStorage.getItem(`homeTeamGoals${getIndex}`) || 0}
-                            onValueChange={(e) => setGoalsHomeTeam(e.value)}
-                            mode="decimal"
-                            min={0}
-                            max={99}
-                          />
-                        </p>
 
-                        <p>
-                          {`${awayTeam}: `}
-                          <InputNumber
-                            inputId="minmax-buttons"
-                            value={localStorage.getItem(`awayTeamGoals${getIndex}`) || 0}
-                            onValueChange={(e) => setGoalsAwayTeam(e.value)}
-                            mode="decimal"
-                            min={0}
-                            max={99}
-                          />
-                        </p>
+                      </Dialog>
+                      {
+                        localStorage.getItem(`showPalpite${index}`) &&
+                        <div className="palpite">
+                          <span>
+                            {value[`palpite${index}`]}
+                          </span>
+                        </div>
+                      }
+                    </span>
+                  </div>
 
-                        <p>
-                          ATENÇÃO: você poderá modificar seu palpite até 30 minutos antes do inicio da partida.
-                        </p>
-                      </div>
+                  <div className='infosMatch'>
+                    <p>
+                      <Button
+                        label={`${fullDate}`}
+                        disabled="true"
+                        className="p-button-raised p-button-text p-button-plain"
+                      />
 
-                    </Dialog>
-                    {
-                      localStorage.getItem(`showPalpite${index}`) &&
-                      <div className="palpite">
-                        <span>
-                          {value[`palpite${index}`]}
-                        </span>
-                      </div>
-                    }
-                  </span>
-                </div>
+                      <Button
+                        label={`${handleHours(value)}:${value.date.slice(14, 16)}`}
+                        disabled="true"
+                        className="p-button-raised p-button-text p-button-plain"
+                      />
+                    </p>
 
-                <div className='infosMatch'>
-                  <p>
-                    <Button
-                      label={`${fullDate}`}
-                      disabled="true"
-                      className="p-button-raised p-button-text p-button-plain"
-                    />
-
-                    <Button
-                      label={`${handleHours(value)}:${value.date.slice(14, 16)}`}
-                      disabled="true"
-                      className="p-button-raised p-button-text p-button-plain"
-                    />
-                  </p>
-
-                  <p>
-                    <Button
-                      label={`Local: ${value.venue}`}
-                      disabled="true"
-                      className="p-button-raised p-button-text p-button-plain"
-                    />
-                  </p>
+                    <p>
+                      <Button
+                        label={`Local: ${value.venue}`}
+                        disabled="true"
+                        className="p-button-raised p-button-text p-button-plain"
+                      />
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            ))) : (
+              <h1>Não haverá jogos Hoje - {fullDate}</h1>
+            )
         }
       </div>
     </div>
